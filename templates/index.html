@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Finder</title>
+    <style>
+        body {
+            text-align: center;
+            margin: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .recipe-title {
+            font-size: 16px;
+            line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+        .home-button {
+            display: block;
+            margin: 20px auto;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recipe Finder</h1>
+    <form method="POST" action="/">
+        <textarea name="search_query" placeholder="Enter ingredients separated by commas (e.g., apples, flour, sugar)"></textarea>
+        <input type="submit" value="Search">
+    </form>
+    <a href="/home" class="home-button">Home</a>
+
+    {% if recipes %}
+        <h2>Results for "{{ search_query }}"</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    {% if recipe.image %}
+                        <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+                    {% endif %}
+                    <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}">View Recipe</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found. Try different ingredients!</p>
+    {% endif %}
+</body>
+</html>
