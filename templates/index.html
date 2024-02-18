@@ -6,58 +6,104 @@
     <style>
         body {
             text-align: center;
-            margin: 40px;
-            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 40px;
+            font-family: 'Georgia', serif;
+            background-color: #fff8f0;
+            color: #5a3e36;
         }
         h1 {
+            color: #d35400;
+            font-family: 'Georgia', serif;
             margin-bottom: 20px;
         }
         form {
-            margin-bottom: 20px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         textarea {
-            width: 300px;
-            height: 100px;
-            margin-bottom: 10px;
+            width: 100%;
+            max-width: 400px;
+            height: 120px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #deb887;
+            background-color: #fbf8f1;
+            resize: none;
+            font-size: 16px;
+            box-sizing: border-box;
         }
         input[type="submit"] {
-            padding: 10px 20px;
+            width: 200px;
+            height: 40px;
+            margin-top: 0;
+            padding: 5px 20px;
+            border-radius: 20px;
+            background-color: #d35400;
+            color: white;
+            border: none;
             cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        input[type="submit"]:hover {
+            background-color: #a04000;
         }
         ul {
             list-style-type: none;
             padding: 0;
+            margin: 0 auto;
+            max-width: 800px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         li {
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
             margin: 10px;
-            width: 200px;
-            border: 1px solid #ccc;
-            padding: 10px;
+            width: 220px;
+            height: 300px; /* Uniform size */
+            border: 1px solid #deb887;
+            border-radius: 8px;
+            background-color: #fbf8f1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            overflow: hidden; /* Ensure content fits */
+        }
+        li:hover {
+            transform: translateY(-5px);
         }
         .recipe-title {
-            font-size: 16px;
-            line-height: 1.2;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            font-size: 16px; /* Uniform font size */
+            margin: 10px;
+            height: 40px; /* Ensure titles occupy the same space */
+            overflow: hidden; /* Hide overflow text */
         }
         img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
-            display: block;
-            margin: 0 auto 10px;
+            max-height: 140px; /* Uniform image height */
+            object-fit: cover; /* Ensure images cover the space well */
         }
-        a {
-            color: blue;
-            text-decoration: underline;
+        .view-button {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 5px 10px;
+            background-color: #d35400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none; /* Remove underline from links styled as buttons */
         }
-        .home-button {
-            display: block;
-            margin: 20px auto;
-            color: blue;
-            text-decoration: underline;
+        .view-button:hover {
+            background-color: #a04000;
         }
     </style>
 </head>
@@ -78,7 +124,7 @@
                     {% if recipe.image %}
                         <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
                     {% endif %}
-                    <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}">View Recipe</a>
+                    <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="view-button">View Recipe</a>
                 </li>
             {% endfor %}
         </ul>
