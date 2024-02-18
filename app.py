@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from rapidfuzz import process, fuzz
 import requests
+import csv
+
 
 # Create the Flask app
 app = Flask(__name__)
@@ -8,8 +10,18 @@ app = Flask(__name__)
 # Replace with your Spoonacular API key
 API_KEY = '2034930ec06a4162a61419499fd4404d'
 
-# List of valid ingredients for correction
-valid_ingredients = ["apple", "orange", "flour", "milk", "eggs", "butter", "sugar", "salt", "cheese", "banana"]
+# Function to gather valid ingredients from API for correction
+csv_file = 'ingredients.csv'
+
+def csvList(csv_file):
+    valid_ingredients = []
+    with open(csv_file, 'r', newline='') as file:
+        reader = csv.DictReader(file,delimiter = ';')
+        for row in reader:
+            valid_ingredients.append(row['ingredient'])
+        return valid_ingredients
+
+valid_ingredients = csvList(csv_file)
 
 # Define the route for the "Home" button
 @app.route('/home', methods=['GET'])
